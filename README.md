@@ -26,8 +26,8 @@
 ## 拉取代码
 
 ```bash
-git clone ...
-
+# 添加了 yaml-cpp 的子模块, 所以拉取代码需要加一个选项用于处理子模块的事情🤷
+git clone --recursive https://github.com/HopeCollector/clbrl.git
 ```
 
 ## 构建项目
@@ -47,3 +47,17 @@ cmake --build build
    如果使用 `cloudcompare` 注意保存后的结果中 scalar 部分, 软件会自动添加 \_scalar\_\_ 前缀, 需要删掉
 3. 使用 `caliba_clb` 进行外参标定
 4. 如果不确定标定效, 可使用 `caliba_apb` 对原始数据应用标定结果, 用可视化软件查看标定结果
+
+# 输出结果
+
+输出的格式为
+
+```yaml
+theta: x, y, z
+trans: x, y, z
+mat: # 4x4 齐次矩阵
+  -[row1]
+  -[row2]
+  -[row3]
+  -[row4]
+```
