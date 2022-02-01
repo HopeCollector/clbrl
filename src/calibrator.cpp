@@ -172,6 +172,15 @@ Calibrator::ThetaFunctor::ThetaFunctor(PointCloudT::Ptr obj,
         lines_[p.id]->push_back(p);
       }
     }
+
+    auto iter = lines_.begin();
+    while (iter != lines_.end()) {
+      if (iter->second->size() < 10) {
+        iter = lines_.erase(iter);
+      } else {
+        iter++;
+      }
+    }
   }
 }
 
@@ -204,6 +213,7 @@ bool Calibrator::ThetaFunctor::operator()(const T* const params,
       }
       resdules[0] += err * err;
     }
+    resdules[0] = ceres::sqrt(resdules[0]) / T(planes_.size());
   } else {
     // 单线激光扫描的结果是线, 应该使用 线面(l, n) 法向量之间的误差
     for (const auto& [id, pc] : lines_) {
@@ -214,8 +224,8 @@ bool Calibrator::ThetaFunctor::operator()(const T* const params,
       T err = subn.transpose() * plane_normal;  // l * n
       resdules[0] += err * err;
     }
+    resdules[0] = ceres::sqrt(resdules[0]) / T(lines_.size());
   }
-  resdules[0] = ceres::sqrt(resdules[0]) / T(planes_.size());
   return true;
 }
 
@@ -230,7 +240,7 @@ bool Calibrator::TransFunctor::operator()(const T* const params,
   Eigen::Transform<T, 3, Eigen::Affine> T_bias(
     Eigen::Matrix4d::Identity().cast<T>());
   T_bias.prerotate(r_bias_.cast<T>())
-    .pretranslate(Eigen::Matrix<T, 3, 1>(params[0], params[1], params[1]));
+    .pretranslate(Eigen::Matrix<T, 3, 1>(params[0], params[1], params[2]));
 
   Eigen::Matrix<T, 3, -1> plane = combine_points(obj_, T_bias, axis_);
   Eigen::Matrix<T, 3, -1> plane_centered =

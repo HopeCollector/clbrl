@@ -4,15 +4,15 @@
 #include "utils.h"
 
 int main() {
-  auto cfg = clb::load_cfg(dir_cfg / "config.yaml");
+  auto cfg = clb::load_cfg();
   std::vector<clb::PointCloudT::Ptr> rclds;
   clb::PointCloudT rcld;
-  clb::load_dir(dir_data / cfg.raw_dirname, rclds);
+  clb::load_dir(cfg.raw_dirname, rclds);
   clb::combine(rclds, rcld, true);
   Eigen::Vector3d axis{cfg.axis_x, cfg.axis_y, cfg.axis_z};
 
   std::vector<clb::PointCloudT::Ptr> objs;
-  clb::load_dir(dir_data / cfg.obj_dirname, objs);
+  clb::load_dir(cfg.obj_dirname, objs);
   clb::extract(rcld, objs, objs);
 
   clb::Calibrator cr;
@@ -29,7 +29,7 @@ int main() {
 
   std::vector<double> ans;
   cr.run(ans);
-  clb::save_ans(dir_cfg / cfg.mat_file_name, ans);
+  clb::save_ans(cfg.mat_file_name, ans);
 
   for (auto& d : ans) {
     std::cout << d << " ";

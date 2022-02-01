@@ -24,5 +24,5 @@ bool extract(const PointCloudT& rcld, const std::vector<PointCloudT::Ptr>& objs,
              std::vector<PointCloudT::Ptr>& oclds);
 
 // 将 xyzi 转化为 rad id idx
-bool toPointCloud(const pcl::PCLPointCloud2& rcld, int id, PointCloudT& ocld);
+bool toPointCloud(pcl::PCLPointCloud2& rcld, int id, PointCloudT& ocld);
 };  // namespace clb

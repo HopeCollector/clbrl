@@ -5,12 +5,12 @@
 #include "utils.h"
 
 int main() {
-  auto cfg = clb::load_cfg(dir_cfg / "config.yaml");
+  auto cfg = clb::load_cfg();
   std::vector<clb::PointCloudT::Ptr> rclds;
   clb::PointCloudT cld;
-  clb::load_dir(dir_data / cfg.raw_dirname, rclds);
+  clb::load_dir(cfg.raw_dirname, rclds);
 
-  YAML::Node node = YAML::LoadFile(dir_cfg / cfg.mat_file_name);
+  YAML::Node node = YAML::LoadFile(cfg.mat_file_name);
   Eigen::Affine3d T_bias;
   for (size_t i = 0; i < 4; i++) {
     auto row = node["mat"][i];
@@ -31,7 +31,7 @@ int main() {
     }
   }
 
-  pcl::io::savePCDFile(dir_data / cfg.cmb_filename, cld);
+  pcl::io::savePCDFile(cfg.cmb_filename, cld, true);
 
   return 0;
 }

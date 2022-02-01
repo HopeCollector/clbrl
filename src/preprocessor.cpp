@@ -125,15 +125,24 @@ bool clb::extract(const PointCloudT& rcld,
   return true;
 }
 
-bool clb::toPointCloud(const pcl::PCLPointCloud2& rcld, int id,
-                       PointCloudT& ocld) {
+bool clb::toPointCloud(pcl::PCLPointCloud2& rcld, int id, PointCloudT& ocld) {
   bool is_has_intensity = false;
   bool is_has_rad = false;
-  for (const auto& field : rcld.fields) {
+  for (auto& field : rcld.fields) {
     if (field.name == "intensity") {
       is_has_intensity = true;
-    } else if (field.name == "rad") {
+    } else if (field.name.find("rad") != std::string::npos) {
       is_has_rad = true;
+      if (field.name != "rad") {
+        field.name = "rad";
+        for (auto& field_ : rcld.fields) {
+          if (field_.name.find("idx") != std::string::npos) {
+            field_.name = "idx";
+          } else if (field_.name.find("id") != std::string::npos) {
+            field_.name = "id";
+          }
+        }
+      }
     }
     if (is_has_intensity || is_has_rad) {
       break;
@@ -159,7 +168,7 @@ bool clb::toPointCloud(const pcl::PCLPointCloud2& rcld, int id,
       po.x = pi.x;
       po.y = pi.y;
       po.z = pi.z;
-      po.rad = pi.intensity * M_PI / 180.0;
+      po.rad = pi.intensity;
       po.id = id;
       po.idx = i;
       ocld.push_back(po);

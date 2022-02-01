@@ -46,13 +46,13 @@ int clb::get_id(const std::string &filename) {
   return ans.size() > 0 ? std::stoi(ans[0]) : -1;
 }
 
-clb::Config clb::load_cfg(const std::string &cfg_name) {
-  YAML::Node node = YAML::LoadFile(cfg_name);
+clb::Config clb::load_cfg() {
+  YAML::Node node = YAML::LoadFile(dir_home / "cfg/config.yaml");
   clb::Config cfg;
-  cfg.raw_dirname = node["raw_dirname"].as<std::string>();
-  cfg.cmb_filename = node["cmb_filename"].as<std::string>();
-  cfg.obj_dirname = node["obj_dirname"].as<std::string>();
-  cfg.mat_file_name = node["mat_file_name"].as<std::string>();
+  cfg.raw_dirname = dir_home / node["raw_dirname"].as<std::string>();
+  cfg.cmb_filename = dir_home / node["cmb_filename"].as<std::string>();
+  cfg.obj_dirname = dir_home / node["obj_dirname"].as<std::string>();
+  cfg.mat_file_name = dir_home / node["mat_file_name"].as<std::string>();
   cfg.is_multi_line = node["is_multi_line"].as<bool>();
   cfg.num_step = node["num_step"].as<int>();
   cfg.thd_err = node["thd_err"].as<double>();
