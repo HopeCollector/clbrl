@@ -1,7 +1,11 @@
+# 绕着激光雷达的哪个轴旋转
+# x 轴：[1, 0, 0]
+# y 轴：[0, 1, 0] 以此类推
+axis: [1, 0, 0]
 # 原始数据文件夹
-raw_dirname: data/rd1
+raw_dirname: data/rd2
 # 组装后文件的名字
-cmb_filename: mti_b.pcd
+cmb_filename: slg_b.pcd
 # 提取出来的特征的文件夹
 obj_dirname: data/objs1
 # 标定结果文件名
@@ -18,5 +22,3 @@ thd_chg: 1e-100
 thd_gdt: 1e-100
 # 是否打印计算过程
 is_print_progress: true
-# 电机旋转时在激光雷达坐标系下的旋转轴
-axis: [0, 1, 0]
