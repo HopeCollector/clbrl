@@ -1,0 +1,22 @@
+# 原始数据文件夹
+raw_dirname: data/rd1
+# 组装后文件的名字
+cmb_filename: mti_b.pcd
+# 提取出来的特征的文件夹
+obj_dirname: data/objs1
+# 标定结果文件名
+mat_file_name: cfg/mat.yaml
+# 标定用的激光雷达是否为多线激光雷达
+is_multi_line: true
+# 优化步数
+num_step: 1000
+# 终止条件 - 误差
+thd_err: 1e-100
+# 终止条件 - 参数改变量
+thd_chg: 1e-100
+# 终止条件 - 梯度
+thd_gdt: 1e-100
+# 是否打印计算过程
+is_print_progress: true
+# 电机旋转时在激光雷达坐标系下的旋转轴
+axis: [0, 1, 0]

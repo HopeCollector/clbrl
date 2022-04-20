@@ -1,6 +1,6 @@
 build/
 data/**
 .vscode/
-cfg/
-!cfg/config.yaml
+#cfg/
+#!cfg/config.yaml
 *.pcd
