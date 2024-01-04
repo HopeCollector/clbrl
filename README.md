@@ -23,6 +23,19 @@ clb(Calibrate) rl(Rotate Lidar)
 
 - J. Kang 和 N. L. Doh, 《Full-DOF Calibration of a Rotating 2-D LIDAR With a Simple Plane Measurement》, IEEE Trans. Robot., 卷 32, 期 5, 页 1245–1263, 10 月 2016, doi: 10.1109/TRO.2016.2596769.
 
+# 测试数据
+
+数据都放在 [谷歌网盘](https://drive.google.com/drive/folders/18LT3ePnCvqa7ZTKOG4ueme7AaqGf5Y5e?usp=drive_link)
+
+- single-line-data：单线激光数据
+- multi-line-data：多线激光数据（目前没有）
+
+文件夹结构：
+- raw：原始数据
+- objs：提取好的平面特征（由用户手动提取，链接里提供的只是一个示范，算法并不会自动提取平面特征）
+- resault.yaml：外参计算结果，可以使用 `apb` 程序将标定结果应用到原始数据上，查看标定效果
+- cmb_output.ply：`cmb` 程序组合 raw 文件夹下数据得到的结果，用于提取平面特征
+
 # 使用方法
 
 ## 拉取代码
@@ -80,3 +93,4 @@ mat: # 4x4 齐次矩阵
   -[row3]
   -[row4]
 ```
+
